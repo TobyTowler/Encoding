@@ -25,7 +25,7 @@ void Decode(char encoded[], int encodedLen, char decoded[], int starterLen) {
     size_t pos = 0, i = 0;
     int count = 0;
     char letter;
-    for (size_t i = 0; i < 6; i += 2) {
+    for (size_t i = 0; i < encodedLen; i += 2) {
         count = encoded[i];
         letter = encoded[i + 1];
 
@@ -36,10 +36,10 @@ void Decode(char encoded[], int encodedLen, char decoded[], int starterLen) {
 }
 
 int main() {
-    int starterLen = 12, encodedLen = 6;
-    char starter[12] = "AAAAABBBBCCC";
-    char encoded[24] = "";
-    char decoded[12] = "";
+    int starterLen = 14, encodedLen = starterLen * 2;
+    char starter[14] = "AAAABBCAAFFFFE";
+    char encoded[2 * 14] = "";
+    char decoded[14] = "";
 
     printf("STARTER  ");
 
@@ -49,7 +49,7 @@ int main() {
 
     printf("\nENCODED  ");
     Encode(starter, encoded, starterLen);
-    for (size_t i = 0; i < 6; i += 2) {
+    for (size_t i = 0; i < encodedLen; i += 2) {
         printf("%d", encoded[i]);
         printf("%c", encoded[i + 1]);
     }
