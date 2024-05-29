@@ -1,5 +1,5 @@
 #include <stdio.h>
-void Encode(char str[], char res[], int len) {
+void Encode(char str[], char res[], int len, int *resLen) {
 
     char current, last;
     size_t startingPos = 0, num = 0;
@@ -17,8 +17,10 @@ void Encode(char str[], char res[], int len) {
         if (i == len - 1) {
             res[2 * num] = (i - startingPos + 1);
             res[2 * num + 1] = str[startingPos];
+            num++;
         }
     }
+    *resLen = 2 * num;
 }
 
 void Decode(char encoded[], int encodedLen, char decoded[], int starterLen) {
@@ -33,10 +35,11 @@ void Decode(char encoded[], int encodedLen, char decoded[], int starterLen) {
             decoded[pos++] = letter;
         }
     }
+    decoded[pos] = '\0';
 }
 
 int main() {
-    int starterLen = 14, encodedLen = starterLen * 2;
+    int starterLen = 14, encodedLen = 2 * starterLen;
     char starter[14] = "AAAABBCAAFFFFE";
     char encoded[2 * 14] = "";
     char decoded[14] = "";
@@ -48,10 +51,9 @@ int main() {
     }
 
     printf("\nENCODED  ");
-    Encode(starter, encoded, starterLen);
+    Encode(starter, encoded, starterLen, &encodedLen);
     for (size_t i = 0; i < encodedLen; i += 2) {
-        printf("%d", encoded[i]);
-        printf("%c", encoded[i + 1]);
+        printf("%d%c", encoded[i], encoded[i + 1]);
     }
 
     printf("\nDECODED  ");
